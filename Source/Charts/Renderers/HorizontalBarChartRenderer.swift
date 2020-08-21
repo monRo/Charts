@@ -262,7 +262,7 @@ open class HorizontalBarChartRenderer: BarChartRenderer
                                                       firstIndexInBar: firstIndexInBar,
                                                       lastIndexInBar: lastIndexInBar)
 
-            let path = createBarPath(for: leftRectInBar, roundedCorners: dataSet.roundedCorners)
+            let path = createBarPath(for: leftRectInBar, roundedCorners: dataSet.roundedCorners, cornerRadius: dataSet.barCornerRadius)
             
             context.addPath(path.cgPath)
             context.clip()
@@ -657,13 +657,13 @@ open class HorizontalBarChartRenderer: BarChartRenderer
         high.setDraw(x: barRect.midY, y: barRect.origin.x + barRect.size.width)
     }
 
-    override internal func createBarPath(for rect: CGRect, roundedCorners: UIRectCorner) -> UIBezierPath {
+    override internal func createBarPath(for rect: CGRect, roundedCorners: UIRectCorner, cornerRadius: CGFloat) -> UIBezierPath {
 
-        let cornerRadius = rect.height / 2.0
+        let radius = (cornerRadius < rect.size.width / 2) ? cornerRadius : rect.size.width / 2
 
         let path = UIBezierPath(roundedRect: rect,
                                 byRoundingCorners: roundedCorners,
-                                cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+                                cornerRadii: CGSize(width: radius, height: radius))
 
         return path
     }

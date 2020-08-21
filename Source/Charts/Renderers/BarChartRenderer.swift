@@ -426,7 +426,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                                 firstIndexInBar: firstIndexInBar,
                                                 lastIndexInBar: lastIndexInBar)
 
-            let path = createBarPath(for: topRectInBar, roundedCorners: dataSet.roundedCorners)
+            let path = createBarPath(for: topRectInBar, roundedCorners: dataSet.roundedCorners, cornerRadius: dataSet.barCornerRadius)
             
             context.addPath(path.cgPath)
             context.clip()
@@ -841,7 +841,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 prepareBarHighlight(x: e.x, y1: y1, y2: y2, barWidthHalf: barData.barWidth / 2.0, trans: trans, rect: &highlightRect)
                 setHighlightDrawPos(highlight: high, barRect: highlightRect)
                 
-                let path = createBarPath(for: barRect, roundedCorners: set.roundedCorners)
+                let path = createBarPath(for: barRect, roundedCorners: set.roundedCorners, cornerRadius: set.barCornerRadius)
 
                 context.saveGState()
 
@@ -957,13 +957,13 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
     }
 
     /// Creates path for bar in rect with rounded corners
-    internal func createBarPath(for rect: CGRect, roundedCorners: UIRectCorner) -> UIBezierPath {
+    internal func createBarPath(for rect: CGRect, roundedCorners: UIRectCorner, cornerRadius: CGFloat) -> UIBezierPath {
 
-        let cornerRadius = rect.width / 2.0
+        let radius = (cornerRadius < rect.size.width / 2) ? cornerRadius : rect.size.width / 2
 
         let path = UIBezierPath(roundedRect: rect,
                                 byRoundingCorners: roundedCorners,
-                                cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+                                cornerRadii: CGSize(width: radius, height: radius))
 
         return path
     }

@@ -42,4 +42,7 @@ public protocol IBarChartDataSet: IBarLineScatterCandleBubbleChartDataSet
     
     /// corners to be rounded
     var roundedCorners: UIRectCorner { get set }
+    
+    /// corner radius
+    var barCornerRadius : CGFloat { get set }
 }
