@@ -9,8 +9,8 @@
 //  https://github.com/danielgindi/Charts
 //
 
-import Foundation
 import CoreGraphics
+import UIKit
 
 @objc
 public protocol IBarChartDataSet: IBarLineScatterCandleBubbleChartDataSet
